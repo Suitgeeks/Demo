@@ -1,0 +1,891 @@
+[
+    {
+        "id": "b3e09583.f55808",
+        "type": "tab",
+        "label": "Anna",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ef2dac30.84f4d",
+        "type": "telegram sender",
+        "z": "b3e09583.f55808",
+        "name": "Send",
+        "bot": "cd3b20c4.9a5a9",
+        "x": 928.0002403259277,
+        "y": 176.00013160705566,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ec4a9c9.da12d6",
+        "type": "watson-conversation-v1",
+        "z": "b3e09583.f55808",
+        "name": "Assistant (Anna bot)",
+        "workspaceid": "1c224994-98fe-475d-b5a4-74fd983e2550",
+        "multiuser": true,
+        "context": true,
+        "empty-payload": false,
+        "default-endpoint": true,
+        "service-endpoint": "https://gateway.watsonplatform.net/assistant/api",
+        "timeout": "",
+        "optout-learning": false,
+        "x": 215.0000762939453,
+        "y": 439.0000829696655,
+        "wires": [
+            [
+                "849b5ae8.2de4c8",
+                "7dc32361.99551c"
+            ]
+        ],
+        "outputLabels": [
+            "{   \"output\": {     \"text\": {},     \"deleted\": \"<? context.remove('lookup') ?> <? context.remove('directToLiveAgent') ?>\"   } }"
+        ]
+    },
+    {
+        "id": "50b8974.55a2a68",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Prepare for Assistent",
+        "func": "msg.chatId = msg.payload.chatId;\nmsg.payload = msg.payload.content;\nmsg.user = msg.originalMessage.from.username\nmsg.params = { \"Source\":\"Telegram\"};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 367.00006103515625,
+        "y": 172.99999618530273,
+        "wires": [
+            [
+                "180f1416.932c4c",
+                "f12dc5f0.8cb978"
+            ]
+        ]
+    },
+    {
+        "id": "43652354.9a1c6c",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Prepare for Telegram (Normal)",
+        "func": "msg.payload = {\n  chatId : msg.chatId,\n  type : \"message\",\n  content : msg.payload.output.text[0]};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1107.000331878662,
+        "y": 538.000394821167,
+        "wires": [
+            [
+                "92ac082d.f6fe18"
+            ]
+        ]
+    },
+    {
+        "id": "3735d817.0dd9f8",
+        "type": "telegram receiver",
+        "z": "b3e09583.f55808",
+        "name": "Receiver",
+        "bot": "cd3b20c4.9a5a9",
+        "saveDataDir": "OFBDA",
+        "x": 120.00006103515625,
+        "y": 169.99999809265137,
+        "wires": [
+            [
+                "50b8974.55a2a68",
+                "6719d7a8.943108"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "849b5ae8.2de4c8",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "Anna response",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 507.50013732910156,
+        "y": 367.0000810623169,
+        "wires": []
+    },
+    {
+        "id": "180f1416.932c4c",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "Prepare for anna",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 602.5000991821289,
+        "y": 103.0000228881836,
+        "wires": []
+    },
+    {
+        "id": "6719d7a8.943108",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "received",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 339.50006103515625,
+        "y": 106.99999809265137,
+        "wires": []
+    },
+    {
+        "id": "e48b98b2.13e8a8",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "send to telegram",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 963.5001373291016,
+        "y": 118.00038528442383,
+        "wires": []
+    },
+    {
+        "id": "e1104f48.501a7",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "After Discovery",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 888.5209770202637,
+        "y": 800.9344501495361,
+        "wires": []
+    },
+    {
+        "id": "9342dc9d.03992",
+        "type": "watson-discovery-v1-query-builder",
+        "z": "b3e09583.f55808",
+        "name": "",
+        "password": "",
+        "environment": "d21b9824-66c3-412c-b7c9-30c266482477",
+        "environmenthidden": "d21b9824-66c3-412c-b7c9-30c266482477",
+        "collection": "8b8f01b8-0aea-4c7b-95f9-732284e6433a",
+        "collectionhidden": "8b8f01b8-0aea-4c7b-95f9-732284e6433a",
+        "nlp_query": true,
+        "nlp_queryhidden": "true",
+        "querynlp": "",
+        "querynlphidden": "",
+        "query1": "enriched_title.entities.sentiment.label",
+        "query1hidden": "",
+        "queryvalue1": "",
+        "queryvalue1hidden": "",
+        "query2": "enriched_title.entities.sentiment.label",
+        "query2hidden": "",
+        "queryvalue2": "",
+        "queryvalue2hidden": "",
+        "query3": "enriched_title.entities.sentiment.label",
+        "query3hidden": "",
+        "queryvalue3": "",
+        "queryvalue3hidden": "",
+        "passages": true,
+        "passageshidden": "false",
+        "default-endpoint": true,
+        "service-endpoint": "https://gateway.watsonplatform.net/discovery/api",
+        "x": 245.06965255737305,
+        "y": 871.2992029190063,
+        "wires": [
+            [
+                "7401c3ed.f2fc2c"
+            ]
+        ]
+    },
+    {
+        "id": "c63e48b5.1f4ce8",
+        "type": "watson-discovery-v1",
+        "z": "b3e09583.f55808",
+        "name": "Search Discovery",
+        "environmentname": "",
+        "environment_id": "d21b9824-66c3-412c-b7c9-30c266482477",
+        "collection_id": "8b8f01b8-0aea-4c7b-95f9-732284e6433a",
+        "configurationname": "",
+        "configuration_id": "",
+        "language_code": "en",
+        "collection_name": "",
+        "count": "2",
+        "passages": true,
+        "nlp_query": false,
+        "query": "",
+        "filter": "",
+        "aggregation": "",
+        "return": "",
+        "description": "",
+        "size": 0,
+        "discovery-method": "query",
+        "default-endpoint": true,
+        "service-endpoint": "https://gateway.watsonplatform.net/discovery/api",
+        "x": 656.5279006958008,
+        "y": 874.7016887664795,
+        "wires": [
+            [
+                "e1104f48.501a7",
+                "7b387294.f1938c"
+            ]
+        ]
+    },
+    {
+        "id": "33915952.9e23a6",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "Query for discovery",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 631.0172843933105,
+        "y": 801.0107383728027,
+        "wires": []
+    },
+    {
+        "id": "7401c3ed.f2fc2c",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Set query",
+        "func": "if (typeof  msg.originalMessage !== 'undefined') {\n    msg.discoveryparams.query = msg.originalMessage.text;\n}else\n{\n    msg.discoveryparams.query = msg.payload.input.text;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 465.51403045654297,
+        "y": 868.9170808792114,
+        "wires": [
+            [
+                "c63e48b5.1f4ce8",
+                "33915952.9e23a6"
+            ]
+        ]
+    },
+    {
+        "id": "511fb186.c49a1",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Prepare for Telegram (Discovery)",
+        "func": "msg.payload = {\n  chatId : msg.chatId,\n  type : \"message\",\n  content : \"De volgende paragraaf is gevonden die wellicht uw vraag kan beantwoorden: \\n\\n _ \\\"\" + msg.search_results.passages[0].passage_text + \"\\\"_\"};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1078.7953147888184,
+        "y": 916.0107092857361,
+        "wires": [
+            [
+                "32347326.b50cbc"
+            ]
+        ]
+    },
+    {
+        "id": "7dc32361.99551c",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Check Flags",
+        "func": "if (typeof msg.payload.context.action !== 'undefined') {\n    return msg;\n}else\n{\n    msg.payload.context.action = {\"Discovery\":false,\"Cloudant\":false};\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 495.5078125,
+        "y": 436.3516311645508,
+        "wires": [
+            [
+                "37d1cb8f.312784",
+                "89ea7b92.d30278"
+            ]
+        ]
+    },
+    {
+        "id": "37d1cb8f.312784",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "Anna response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 765.0195159912109,
+        "y": 361.00398349761963,
+        "wires": []
+    },
+    {
+        "id": "a384583b.88a948",
+        "type": "link in",
+        "z": "b3e09583.f55808",
+        "name": "Assistant",
+        "links": [
+            "f12dc5f0.8cb978",
+            "7b98bd4b.2774b4",
+            "76ec2dbd.0c4e74",
+            "fcd45c96.efc8a"
+        ],
+        "x": 52.99999713897705,
+        "y": 438.43750762939453,
+        "wires": [
+            [
+                "1ec4a9c9.da12d6"
+            ]
+        ]
+    },
+    {
+        "id": "f12dc5f0.8cb978",
+        "type": "link out",
+        "z": "b3e09583.f55808",
+        "name": "Telegram input",
+        "links": [
+            "a384583b.88a948"
+        ],
+        "x": 555.5196132659912,
+        "y": 173.85156345367432,
+        "wires": []
+    },
+    {
+        "id": "776e501b.8b344",
+        "type": "link out",
+        "z": "b3e09583.f55808",
+        "name": "Input Discovery",
+        "links": [
+            "4142d648.589eb8",
+            "9d25fabc.aa05a8"
+        ],
+        "x": 819.5196475982666,
+        "y": 454.85169792175293,
+        "wires": []
+    },
+    {
+        "id": "4142d648.589eb8",
+        "type": "link in",
+        "z": "b3e09583.f55808",
+        "name": "Discovery",
+        "links": [
+            "776e501b.8b344"
+        ],
+        "x": 73.5156946182251,
+        "y": 872.4454469680786,
+        "wires": [
+            [
+                "9342dc9d.03992"
+            ]
+        ]
+    },
+    {
+        "id": "92ac082d.f6fe18",
+        "type": "link out",
+        "z": "b3e09583.f55808",
+        "name": "Output assistant",
+        "links": [
+            "616a42e9.a7e22c"
+        ],
+        "x": 1291.5196475982666,
+        "y": 538.8517436981201,
+        "wires": []
+    },
+    {
+        "id": "616a42e9.a7e22c",
+        "type": "link in",
+        "z": "b3e09583.f55808",
+        "name": "Send to Telegram",
+        "links": [
+            "92ac082d.f6fe18",
+            "32347326.b50cbc",
+            "58b655be.0f923c",
+            "f15f6c20.e2cdb"
+        ],
+        "x": 744.5079326629639,
+        "y": 174.44142055511475,
+        "wires": [
+            [
+                "ef2dac30.84f4d",
+                "e48b98b2.13e8a8"
+            ]
+        ]
+    },
+    {
+        "id": "32347326.b50cbc",
+        "type": "link out",
+        "z": "b3e09583.f55808",
+        "name": "Output discovery",
+        "links": [
+            "616a42e9.a7e22c"
+        ],
+        "x": 1267.5199527740479,
+        "y": 915.8478679656982,
+        "wires": []
+    },
+    {
+        "id": "fa2e2254.6eb56",
+        "type": "cloudant in",
+        "z": "b3e09583.f55808",
+        "name": "Search by id (email)",
+        "cloudant": "",
+        "database": "daniel",
+        "service": "OFDA-cloudantNoSQLDB",
+        "search": "_id_",
+        "design": "57fdf8907b7c20546fdd818587ea491a5bbbd600",
+        "index": "personeelsnummer-index",
+        "x": 483.8906421661377,
+        "y": 1252.1720342636108,
+        "wires": [
+            [
+                "39890a02.bd7536",
+                "e381d90e.9d2918"
+            ]
+        ]
+    },
+    {
+        "id": "adcad690.61d768",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "email",
+        "func": "msg.payload = \"achapman@ofdataanalytics.com\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 178.5078067779541,
+        "y": 1252.3359966278076,
+        "wires": [
+            [
+                "fa2e2254.6eb56",
+                "c4e088e8.ed8878"
+            ]
+        ]
+    },
+    {
+        "id": "67f8661c.bb9be8",
+        "type": "link out",
+        "z": "b3e09583.f55808",
+        "name": "Input Cloudant",
+        "links": [
+            "3ab203c5.a672cc"
+        ],
+        "x": 817.0195560455322,
+        "y": 517.0039958953857,
+        "wires": []
+    },
+    {
+        "id": "3ab203c5.a672cc",
+        "type": "link in",
+        "z": "b3e09583.f55808",
+        "name": "Cloudant",
+        "links": [
+            "67f8661c.bb9be8"
+        ],
+        "x": 70.0195255279541,
+        "y": 1251.0039501190186,
+        "wires": [
+            [
+                "adcad690.61d768"
+            ]
+        ]
+    },
+    {
+        "id": "c4e088e8.ed8878",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "Input cloudant",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 471.01953315734863,
+        "y": 1186.003918647766,
+        "wires": []
+    },
+    {
+        "id": "39890a02.bd7536",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "Output Cloudant",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 734.0195426940918,
+        "y": 1221.0040302276611,
+        "wires": []
+    },
+    {
+        "id": "f9f607e9.8d3f88",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Prepare for Telegram (Cloudant)",
+        "func": "msg.payload = {\n  chatId : msg.chatId,\n  type : \"message\",\n  content : \"Mijn naam is \" + msg.payload.name +  \"\\n\"  + \n            \"Ik werk naast assistent ook als \" + msg.payload.title +  \"\\n\" +\n            \"[Photo](\"+ msg.payload.imagelink + \")\" };\nmsg.payload.options = {parse_mode : \"Markdown\"};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1024.0195541381836,
+        "y": 1254.0039386749268,
+        "wires": [
+            [
+                "58b655be.0f923c"
+            ]
+        ]
+    },
+    {
+        "id": "58b655be.0f923c",
+        "type": "link out",
+        "z": "b3e09583.f55808",
+        "name": "Output discovery",
+        "links": [
+            "616a42e9.a7e22c"
+        ],
+        "x": 1226.7439517974854,
+        "y": 1253.8413066864014,
+        "wires": []
+    },
+    {
+        "id": "7dee413.fa124c",
+        "type": "http in",
+        "z": "b3e09583.f55808",
+        "name": "Anna HTML",
+        "url": "/Anna",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 1287.0234756469727,
+        "y": 137.0390567779541,
+        "wires": [
+            [
+                "291b1372.16edec"
+            ]
+        ]
+    },
+    {
+        "id": "291b1372.16edec",
+        "type": "template",
+        "z": "b3e09583.f55808",
+        "name": "Anna Template",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<html>\n<style>\n#output {\n    width: 100%;\n    height: 90%;\n    border: 5px solid #ccc;\n    white-space: pre;\n    overflow-y: scroll;\n    overflow-x: scroll;\n}\n\n#footer {\n    box-sizing: border-box;\n    position: fixed;\n    bottom: 0;\n    width: 100%;\n    background-color: #2980b9;\n}\n\n.content {\n    /*width: 70%;*/\n    /*margin: 0 auto;*/\n}\n\n#send_btn {\n    width: 10%;\n    position: absolute;\n    right: 0;\n    bottom: 0;\n    margin: 0;\n}\n\n#id_chattext {\n    width: 100%;\n}\n\n\ninput[type=\"text\"],\ninput[type=\"button\"] {\n    border: 0;\n    color: #fff;\n}\n\ninput[type=\"text\"] {\n    background-color: #146EA8;\n    padding: 3px 10px;\n}\n\ninput[type=\"button\"] {\n    background-color: #f39c12;\n    border-right: 2px solid #e67e22;\n    border-bottom: 2px solid #e67e22;\n    min-width: 70px;\n    display: inline-block;\n}\n\ninput[type=\"button\"]:hover {\n    background-color: #e67e22;\n    border-right: 2px solid #f39c12;\n    border-bottom: 2px solid #f39c12;\n    cursor: pointer;\n}\n\n* {\n    font-family: \"Palatino Linotype\", \"Book Antiqua\", Palatino, serif;\n    font-style: italic;\n    font-size: 24px;\n}\n\nhtml,\nbody,\n#wrapper {\n    margin: 0;\n    padding: 0;\n    height: 100%;\n}\n</style>\n\n<head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>\n        Chatbot Anna\n    </title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" />\n</head>\n\n<body>\n    <div>\n        <div id=\"no-script\" class=\"bg-info\">\n            This application needs JavaScript enabled in your browser!\n        </div>\n        <div id=\"id_contextdump\"></div>\n        <h1>Chatbot Anna</h1>\n        <div id=id_botchathistory class=\"test\" style=\"display: show;\">\n            <div id=output contentEditable=\"true\"></div>\n        </div>\n        <div id=\"footer\">\n            <div class=\"content\">\n                <input type=\"text\" name=\"chattext\" id=\"id_chattext\" autocomplete=\"off\" placeholder=\"Hi there! Type here to talk to me.\">\n                <input id=\"send_btn\" type=\"button\" value=\"Send\" onclick=\"javascript:onChatClick()\">\n            </div>\n        </div>\n    </div>\n    <script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-2.1.4.min.js\"></script>\n    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>\n    <script type=\"text/javascript\">\n    $(document).ready(function() {\n        javascriptCheck();\n        $('#id_contextdump').hide();\n    });\n\n    // if javascript is enabled on the browser then can\n    // remove the warning message\n    function javascriptCheck() {\n        $('#no-script').remove();\n    }\n\n    function createNewDiv(who, message) {\n        var txt = who + ' : ' + message;\n        return $('<div></div>').text(txt);\n    }\n\n    function chat(person, txt) {\n        // $('#id_botchathistory').append(createNewDiv(person, txt))\n        $('#id_botchathistory').show();\n\n        var div = document.getElementById('output');\n        div.innerHTML += \"<b>\" + person + \"</b>\" + ' : ' + txt; //+\"&#13;&#10\";\n        div.innerHTML += \"<br>\";\n\n        div.scrollTop = div.scrollHeight;\n    }\n\n    function processOK(response) {\n        // console.log(response);\n        // console.log(response.botresponse.messageout);\n        // console.log(response.botresponse.messageout.output.text);\n        // console.log(response.botresponse.messageout.context);\n        chat('Anna', response); //.botresponse.messageout.output.text);\n        // alert(response)\n        // $('#id_contextdump').data('convContext',response.botresponse.messageout.context);\n    }\n\n    function processNotOK() {\n        chat('Error', 'Error whilst attempting to talk to Anna');\n    }\n\n    function invokeAjax(message) {\n        var contextdata = $('#id_contextdump').data('convContext');\n        console.log('checking stashed context data');\n        console.log(contextdata);\n\n\n        //var ajaxData = \"msgdata=\" + message;\n        var ajaxData = {};\n        ajaxData.msgdata = message;\n        if (contextdata) {\n            ajaxData.context = contextdata;\n        }\n\n        $.ajax({\n            type: 'POST',\n            url: '/botchat',\n            data: ajaxData,\n            success: processOK,\n            error: processNotOK\n        });\n        document.getElementById(\"id_chattext\").value = \"\";\n    }\n\n    // User has entered some text.\n    function onChatClick() {\n        var txt = $('#id_chattext').val();\n        chat('You', txt);\n        invokeAjax(txt);\n    }\n\n    $('input').keydown(function(e) {\n        var txt = $('#id_chattext').val();\n        if (e.which == 13 && txt.length > 0) { //catch Enter key\n            chat('You', txt);\n            invokeAjax(txt);\n        }\n    });\n\n    $(function() {\n        $(\"form\").submit(function() { return false; });\n    });\n\n    $(document).ready(function() {\n        invokeAjax(\"/start\");\n        document.getElementById('id_chattext').focus();\n    });\n    </script>\n</body>\n\n</html>",
+        "output": "str",
+        "x": 1549.0234756469727,
+        "y": 137.03906059265137,
+        "wires": [
+            [
+                "7d74da33.80b374"
+            ]
+        ]
+    },
+    {
+        "id": "7d74da33.80b374",
+        "type": "http response",
+        "z": "b3e09583.f55808",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1809.0235328674316,
+        "y": 137.0390625,
+        "wires": []
+    },
+    {
+        "id": "6b422c74.2ef894",
+        "type": "http in",
+        "z": "b3e09583.f55808",
+        "name": "http request",
+        "url": "/botchat",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 1286.0234756469727,
+        "y": 239.0390567779541,
+        "wires": [
+            [
+                "f135f448.852d98",
+                "b510e532.2f8d58"
+            ]
+        ]
+    },
+    {
+        "id": "f135f448.852d98",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Pre Service Processing",
+        "func": "// stash away incoming data\nmsg.mydata = {};\nmsg.mydata.messagein = msg.req.body.msgdata;\nmsg.payload = msg.mydata.messagein;\nmsg.user = \"Daniel\"\nmsg.params = { \"context\": msg.req.body.context, \"Source\":\"Web\"};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1524.0234756469727,
+        "y": 303.0390634536743,
+        "wires": [
+            [
+                "11257d0d.b4aca3",
+                "fcd45c96.efc8a"
+            ]
+        ]
+    },
+    {
+        "id": "11257d0d.b4aca3",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "Pre Service Processing",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1873.0000457763672,
+        "y": 216.00000095367432,
+        "wires": []
+    },
+    {
+        "id": "b510e532.2f8d58",
+        "type": "debug",
+        "z": "b3e09583.f55808",
+        "name": "Pre Service Processing",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1536.0000305175781,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "89ea7b92.d30278",
+        "type": "switch",
+        "z": "b3e09583.f55808",
+        "name": "OtherCase",
+        "property": "payload.output.nodes_visited",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "node_17_1525694808090",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "node_1_1526041500029",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 679.0000152587891,
+        "y": 518.0000152587891,
+        "wires": [
+            [
+                "776e501b.8b344"
+            ],
+            [
+                "67f8661c.bb9be8"
+            ],
+            [
+                "6747feb4.84fb6"
+            ]
+        ]
+    },
+    {
+        "id": "7b387294.f1938c",
+        "type": "switch",
+        "z": "b3e09583.f55808",
+        "name": "Source Case",
+        "property": "params.Source",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Telegram",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Web",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 832.0000228881836,
+        "y": 951.0000286102295,
+        "wires": [
+            [
+                "511fb186.c49a1"
+            ],
+            [
+                "95a48b2d.e2b6b8"
+            ]
+        ]
+    },
+    {
+        "id": "41da4313.4563bc",
+        "type": "http response",
+        "z": "b3e09583.f55808",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1296.0002975463867,
+        "y": 983.000150680542,
+        "wires": []
+    },
+    {
+        "id": "fcd45c96.efc8a",
+        "type": "link out",
+        "z": "b3e09583.f55808",
+        "name": "Telegram input",
+        "links": [
+            "a384583b.88a948"
+        ],
+        "x": 1709,
+        "y": 303.99999141693115,
+        "wires": []
+    },
+    {
+        "id": "bc9be752.d35798",
+        "type": "http response",
+        "z": "b3e09583.f55808",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1326.0001182556152,
+        "y": 593.9999980926514,
+        "wires": []
+    },
+    {
+        "id": "6747feb4.84fb6",
+        "type": "switch",
+        "z": "b3e09583.f55808",
+        "name": "Source Case",
+        "property": "params.Source",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Telegram",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Web",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 863.0000228881836,
+        "y": 569.0000133514404,
+        "wires": [
+            [
+                "43652354.9a1c6c"
+            ],
+            [
+                "4033aa25.ef5044"
+            ]
+        ]
+    },
+    {
+        "id": "4033aa25.ef5044",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Prepare for web(Normal)",
+        "func": "msg.payload = msg.payload.output.text[0]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1087.000057220459,
+        "y": 594.9999980926514,
+        "wires": [
+            [
+                "bc9be752.d35798"
+            ]
+        ]
+    },
+    {
+        "id": "95a48b2d.e2b6b8",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Prepare for web(Discovery)",
+        "func": "msg.payload = \"De volgende paragraaf is gevonden die wellicht uw vraag kan beantwoorden: \\n\\n _ \\\"\" + msg.search_results.passages[0].passage_text + \"\\\"_\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1060.3333683013916,
+        "y": 982.0000591278076,
+        "wires": [
+            [
+                "41da4313.4563bc"
+            ]
+        ]
+    },
+    {
+        "id": "e381d90e.9d2918",
+        "type": "switch",
+        "z": "b3e09583.f55808",
+        "name": "OtherCase",
+        "property": "params.Source",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Telegram",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Web",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 724.0234642028809,
+        "y": 1284.0390644073486,
+        "wires": [
+            [
+                "f9f607e9.8d3f88"
+            ],
+            [
+                "da25f00a.b8f43"
+            ]
+        ]
+    },
+    {
+        "id": "da25f00a.b8f43",
+        "type": "function",
+        "z": "b3e09583.f55808",
+        "name": "Prepare for web(Cloudant)",
+        "func": "msg.payload = \"Mijn naam is \" + msg.payload.name +  \"\\n\"  + \n            \"Ik werk naast assistent ook als \" + msg.payload.title +  \"\\n\" +\n            \"<img src=\\\"\" + msg.payload.imagelink + \"\\\">\" \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1014.0234642028809,
+        "y": 1316.0390644073486,
+        "wires": [
+            [
+                "5bc66761.5558f8"
+            ]
+        ]
+    },
+    {
+        "id": "5bc66761.5558f8",
+        "type": "http response",
+        "z": "b3e09583.f55808",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1257.690330505371,
+        "y": 1315.0391826629639,
+        "wires": []
+    },
+    {
+        "id": "cd3b20c4.9a5a9",
+        "type": "telegram bot",
+        "z": "",
+        "botname": "Anna",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "pollinterval": "300"
+    }
+]
