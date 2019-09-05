@@ -1,0 +1,6 @@
+tmp/
+typings/
+node_modules/
+*.js.map
+.funcpack/
+local.settings.json
