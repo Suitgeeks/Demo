@@ -1,0 +1,27 @@
+{
+    "de beglazing": {
+        "responsible": "tenant",
+        "objects": [
+            "het raam"
+        ]
+    },
+    "de cv": {
+        "responsible": "corporation",
+        "objects": [
+            "de cv-ketel"
+        ]
+    },
+    "het sanitair": {
+        "responsible": "service contract",
+        "objects": [
+            "de kraan",
+            "de douche"
+        ]
+    },
+    "de riolering": {
+        "responsible": "service contract",
+        "objects": [
+            "de afvoer"
+        ]
+    }
+}

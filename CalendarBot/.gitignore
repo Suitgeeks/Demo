@@ -1,0 +1,7 @@
+test/
+.vscode/
+.firebaserc
+node_modules/
+.eslintrc.json
+package-lock.json
+firebase-debug.log
